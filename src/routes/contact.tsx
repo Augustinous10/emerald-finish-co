@@ -2,7 +2,10 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
-import { Mail, MapPin, Phone, Clock } from "lucide-react";
+import { Mail, MapPin, Phone, Clock, CheckCircle2 } from "lucide-react";
+import { useState } from "react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -19,6 +22,26 @@ export const Route = createFileRoute("/contact")({
 });
 
 function Contact() {
+  const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setBusy(true);
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: String(fd.get("name") || "").trim(),
+      email: String(fd.get("email") || "").trim(),
+      phone: String(fd.get("phone") || "").trim() || null,
+      subject: String(fd.get("subject") || "").trim() || null,
+      message: String(fd.get("message") || "").trim(),
+    };
+    const { error } = await supabase.from("contact_messages").insert(payload);
+    setBusy(false);
+    if (error) { toast.error("Couldn't send. Try again or WhatsApp us."); return; }
+    setSubmitted(true);
+  }
+
   return (
     <div className="bg-canvas text-ink">
       <Header />
@@ -54,28 +77,36 @@ function Contact() {
             ))}
           </div>
 
-          <form className="bg-secondary p-8 md:p-10 space-y-5">
-            <h2 className="font-display text-2xl mb-2">Send a message</h2>
-            {[
-              { label: "Full name", type: "text" },
-              { label: "Email", type: "email" },
-              { label: "Phone", type: "tel" },
-              { label: "Subject", type: "text" },
-            ].map((f) => (
-              <div key={f.label} className="space-y-2">
-                <label className="text-[10px] uppercase tracking-[0.25em] font-semibold text-ink/60">{f.label}</label>
-                <input type={f.type} required className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand" />
-              </div>
-            ))}
-            <div className="space-y-2">
-              <label className="text-[10px] uppercase tracking-[0.25em] font-semibold text-ink/60">Message</label>
-              <textarea rows={5} required className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand" />
+          {submitted ? (
+            <div className="bg-secondary p-12 text-center space-y-4">
+              <CheckCircle2 className="mx-auto text-brand" size={48} strokeWidth={1.5} />
+              <h2 className="font-display text-3xl">Message received</h2>
+              <p className="text-ink/70">Our team will respond within 2 business hours.</p>
             </div>
-            <button type="submit" className="w-full bg-brand text-brand-foreground py-4 text-sm uppercase tracking-widest font-semibold hover:bg-ink transition-colors">
-              Send Message
-            </button>
-            <p className="text-[11px] text-ink/50">We typically respond within 2 business hours.</p>
-          </form>
+          ) : (
+            <form onSubmit={handleSubmit} className="bg-secondary p-8 md:p-10 space-y-5">
+              <h2 className="font-display text-2xl mb-2">Send a message</h2>
+              {[
+                { label: "Full name", name: "name", type: "text", required: true },
+                { label: "Email", name: "email", type: "email", required: true },
+                { label: "Phone", name: "phone", type: "tel", required: false },
+                { label: "Subject", name: "subject", type: "text", required: false },
+              ].map((f) => (
+                <div key={f.name} className="space-y-2">
+                  <label className="text-[10px] uppercase tracking-[0.25em] font-semibold text-ink/60">{f.label}</label>
+                  <input name={f.name} type={f.type} required={f.required} className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand" />
+                </div>
+              ))}
+              <div className="space-y-2">
+                <label className="text-[10px] uppercase tracking-[0.25em] font-semibold text-ink/60">Message</label>
+                <textarea name="message" rows={5} required className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand" />
+              </div>
+              <button type="submit" disabled={busy} className="w-full bg-brand text-brand-foreground py-4 text-sm uppercase tracking-widest font-semibold hover:bg-ink transition-colors disabled:opacity-50">
+                {busy ? "Sending…" : "Send Message"}
+              </button>
+              <p className="text-[11px] text-ink/50">We typically respond within 2 business hours.</p>
+            </form>
+          )}
         </div>
       </section>
 

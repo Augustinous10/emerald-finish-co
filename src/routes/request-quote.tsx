@@ -4,6 +4,8 @@ import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { CheckCircle2 } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 export const Route = createFileRoute("/request-quote")({
   head: () => ({
@@ -42,6 +44,29 @@ const BUDGETS = [
 
 function Quote() {
   const [submitted, setSubmitted] = useState(false);
+  const [busy, setBusy] = useState(false);
+
+  async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault();
+    setBusy(true);
+    const fd = new FormData(e.currentTarget);
+    const payload = {
+      name: String(fd.get("name") || "").trim(),
+      email: String(fd.get("email") || "").trim(),
+      phone: String(fd.get("phone") || "").trim() || null,
+      service: String(fd.get("service") || "") || null,
+      budget: String(fd.get("budget") || "") || null,
+      message: String(fd.get("message") || "") || null,
+      project_type: String(fd.get("location") || "") || null,
+    };
+    const { error } = await supabase.from("quote_requests").insert(payload);
+    setBusy(false);
+    if (error) {
+      toast.error("Couldn't submit. Please try again or call us directly.");
+      return;
+    }
+    setSubmitted(true);
+  }
 
   return (
     <div className="bg-canvas text-ink">
@@ -71,13 +96,7 @@ function Quote() {
               </p>
             </div>
           ) : (
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                setSubmitted(true);
-              }}
-              className="space-y-6 bg-secondary p-8 md:p-10"
-            >
+            <form onSubmit={handleSubmit} className="space-y-6 bg-secondary p-8 md:p-10">
               <div className="grid sm:grid-cols-2 gap-5">
                 <Field label="Full name *" name="name" required />
                 <Field label="Phone (MTN / Airtel) *" name="phone" type="tel" required />
@@ -91,7 +110,7 @@ function Quote() {
                 <label className="text-[10px] uppercase tracking-[0.25em] font-semibold text-ink/60">
                   Service required *
                 </label>
-                <select required className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand">
+                <select name="service" required className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand">
                   <option value="">Choose a service…</option>
                   {SERVICES.map((s) => (
                     <option key={s}>{s}</option>
@@ -103,7 +122,7 @@ function Quote() {
                 <label className="text-[10px] uppercase tracking-[0.25em] font-semibold text-ink/60">
                   Estimated budget
                 </label>
-                <select className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand">
+                <select name="budget" className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand">
                   <option value="">Select a range…</option>
                   {BUDGETS.map((b) => (
                     <option key={b}>{b}</option>
@@ -115,7 +134,7 @@ function Quote() {
                 <label className="text-[10px] uppercase tracking-[0.25em] font-semibold text-ink/60">
                   Project description
                 </label>
-                <textarea rows={5} className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand" placeholder="Rooms, dimensions, finish preferences, timeline…" />
+                <textarea name="message" rows={5} className="w-full bg-canvas border border-black/10 px-4 py-3 text-sm focus:outline-none focus:border-brand" placeholder="Rooms, dimensions, finish preferences, timeline…" />
               </div>
 
               <div className="grid sm:grid-cols-2 gap-5">
@@ -126,8 +145,8 @@ function Quote() {
                 </div>
               </div>
 
-              <button type="submit" className="w-full bg-brand text-brand-foreground py-4 text-sm uppercase tracking-widest font-semibold hover:bg-ink transition-colors">
-                Send Request
+              <button type="submit" disabled={busy} className="w-full bg-brand text-brand-foreground py-4 text-sm uppercase tracking-widest font-semibold hover:bg-ink transition-colors disabled:opacity-50">
+                {busy ? "Sending…" : "Send Request"}
               </button>
               <p className="text-[11px] text-ink/50 text-center">
                 By submitting, you agree to be contacted about your project. We respect your privacy.
