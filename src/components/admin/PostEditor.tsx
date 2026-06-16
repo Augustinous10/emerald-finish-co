@@ -41,7 +41,7 @@ export function PostEditor({ initial }: { initial?: any }) {
       const { data: u } = await supabase.auth.getUser();
       const payload = {
         title, slug: slugify(slug), excerpt: excerpt || null, content,
-        tags: tags.split(",").map((t) => t.trim()).filter(Boolean),
+        tags: tags.split(",").map((t: string) => t.trim()).filter(Boolean),
         cover_image: coverPath, published: publish,
         published_at: publish ? (initial?.published_at ?? new Date().toISOString()) : null,
         author_id: u.user?.id ?? null,
