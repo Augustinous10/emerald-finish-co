@@ -1,5 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useState } from "react";
 import { ArrowUpRight, Award, Brush, Clock, Hammer, ShieldCheck, Sparkles } from "lucide-react";
 
 import { Header } from "@/components/site/Header";
@@ -8,6 +7,7 @@ import { BeforeAfter } from "@/components/site/BeforeAfter";
 import { CostCalculator } from "@/components/site/CostCalculator";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { StatCounter } from "@/components/site/StatCounter";
+import { HeroSlideshow } from "@/components/site/HeroSlideshow";
 
 import hero from "@/assets/hero.jpg";
 import sInterior from "@/assets/service-interior.jpg";
@@ -109,68 +109,13 @@ function fmtRWF(n: number) {
 }
 
 function Home() {
-  const [slide, setSlide] = useState(0);
-  useEffect(() => {
-    const id = setInterval(() => setSlide((s) => (s + 1) % slides.length), 6000);
-    return () => clearInterval(id);
-  }, []);
-
-  const current = slides[slide];
-
   return (
     <div className="bg-canvas text-ink">
       <Header />
       <WhatsAppButton />
 
-      {/* Hero */}
-      <section className="relative h-screen min-h-[640px] flex items-end overflow-hidden">
-        <img
-          src={hero}
-          alt="Luxury Kigali villa interior with deep green accent wall"
-          width={1920}
-          height={1280}
-          className="absolute inset-0 w-full h-full object-cover animate-kenburns"
-        />
-        <div className="absolute inset-0 bg-gradient-to-r from-brand/70 via-brand/30 to-transparent" />
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-        <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pb-24 md:pb-32">
-          <div key={slide} className="max-w-2xl space-y-8 animate-fade-up">
-            <span className="text-gold text-xs uppercase tracking-[0.4em] font-semibold">
-              {current.eyebrow}
-            </span>
-            <h1 className="font-display text-canvas text-5xl md:text-7xl leading-[1.05] text-balance font-medium">
-              {current.title}
-            </h1>
-            <p className="text-canvas/80 text-lg max-w-xl text-pretty">{current.body}</p>
-            <div className="flex flex-wrap gap-4 pt-4">
-              <Link
-                to="/request-quote"
-                className="inline-flex items-center gap-2 bg-gold text-gold-foreground px-7 py-4 rounded-sm text-sm font-semibold uppercase tracking-widest hover:bg-canvas transition-colors"
-              >
-                Request Quote <ArrowUpRight size={16} />
-              </Link>
-              <Link
-                to="/services"
-                className="inline-flex items-center gap-2 bg-canvas/10 backdrop-blur-md text-canvas border border-canvas/30 px-7 py-4 rounded-sm text-sm font-semibold uppercase tracking-widest hover:bg-canvas/20 transition-colors"
-              >
-                View Services
-              </Link>
-            </div>
-          </div>
-
-          <div className="absolute bottom-8 right-6 hidden md:flex items-center gap-3">
-            {slides.map((_, i) => (
-              <button
-                key={i}
-                onClick={() => setSlide(i)}
-                aria-label={`Slide ${i + 1}`}
-                className={`h-px transition-all ${i === slide ? "w-12 bg-gold" : "w-6 bg-canvas/40"}`}
-              />
-            ))}
-          </div>
-        </div>
-      </section>
+      {/* Hero — auto-rotating slideshow. Drop images in src/assets/hero/ */}
+      <HeroSlideshow slides={slides} />
 
       {/* Stats */}
       <section className="py-14 bg-ink text-canvas">
@@ -189,6 +134,82 @@ function Home() {
                 <span className="text-[10px] uppercase tracking-[0.25em] text-canvas/60">{it.l}</span>
               </div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Company Profile */}
+      <section className="py-28 bg-canvas">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-12 gap-12 items-center">
+          <div className="lg:col-span-5 relative">
+            <div className="aspect-[4/5] overflow-hidden">
+              <img
+                src={sInterior}
+                alt="Ubudasa Wall Paints craftsmen at work in Kigali"
+                loading="lazy"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute -bottom-6 -right-6 bg-brand text-canvas p-6 hidden md:block">
+              <div className="font-display text-4xl text-gold">10+</div>
+              <div className="text-[10px] uppercase tracking-[0.25em] mt-1">Years of Craft</div>
+            </div>
+          </div>
+          <div className="lg:col-span-7 space-y-6">
+            <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">
+              Company Profile
+            </span>
+            <h2 className="font-display text-4xl md:text-5xl font-medium text-balance leading-[1.1]">
+              Rwanda's trusted name in premium wall finishing.
+            </h2>
+            <p className="text-ink/70 text-lg leading-relaxed text-pretty">
+              Ubudasa Wall Paints Ltd is a Kigali-based architectural finishing studio
+              specialising in interior and exterior painting, decorative plasters, gypsum
+              ceilings, TV wall design, and full renovation work. From private villas to
+              hotels, offices and developer projects, we deliver finishes that elevate every
+              surface and endure every season.
+            </p>
+            <p className="text-ink/70 leading-relaxed text-pretty">
+              Founded on a commitment to craftsmanship and accountability, our certified
+              teams have completed 500+ projects across 15+ districts — using only
+              premium-grade materials and luxury European application techniques.
+            </p>
+            <dl className="grid sm:grid-cols-2 gap-x-8 gap-y-5 pt-4 border-t border-black/10">
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.25em] text-ink/55">Mission</dt>
+                <dd className="mt-2 text-sm text-ink/80">
+                  Transform Rwandan spaces with finishes of international standard.
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.25em] text-ink/55">Vision</dt>
+                <dd className="mt-2 text-sm text-ink/80">
+                  Be East Africa's most respected wall-finishing brand.
+                </dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.25em] text-ink/55">Headquarters</dt>
+                <dd className="mt-2 text-sm text-ink/80">Kigali, Rwanda</dd>
+              </div>
+              <div>
+                <dt className="text-[10px] uppercase tracking-[0.25em] text-ink/55">Coverage</dt>
+                <dd className="mt-2 text-sm text-ink/80">15+ districts nationwide</dd>
+              </div>
+            </dl>
+            <div className="flex flex-wrap gap-4 pt-4">
+              <Link
+                to="/about"
+                className="inline-flex items-center gap-2 bg-brand text-canvas px-7 py-4 rounded-sm text-xs font-semibold uppercase tracking-widest hover:bg-ink transition-colors"
+              >
+                Full Company Profile <ArrowUpRight size={14} />
+              </Link>
+              <Link
+                to="/contact"
+                className="inline-flex items-center gap-2 border border-ink/20 px-7 py-4 rounded-sm text-xs font-semibold uppercase tracking-widest hover:bg-secondary transition-colors"
+              >
+                Contact Our Team
+              </Link>
+            </div>
           </div>
         </div>
       </section>
