@@ -83,6 +83,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "Ubudasa Wall Paints Ltd" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:title", content: "Ubudasa Wall Paints — Premium Wall Finishing in Rwanda" },
+      { name: "twitter:title", content: "Ubudasa Wall Paints — Premium Wall Finishing in Rwanda" },
+      { property: "og:description", content: "Rwanda's leading wall finishing, painting, and interior design studio. Premium craftsmanship for homes, hotels, and commercial spaces across Kigali." },
+      { name: "twitter:description", content: "Rwanda's leading wall finishing, painting, and interior design studio. Premium craftsmanship for homes, hotels, and commercial spaces across Kigali." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4d74a073-ca00-4ff4-a995-3a06d122334e/id-preview-d9efbbf5--718cccf4-c5ff-43d5-a790-3a7b3b0eb85b.lovable.app-1781610022865.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/4d74a073-ca00-4ff4-a995-3a06d122334e/id-preview-d9efbbf5--718cccf4-c5ff-43d5-a790-3a7b3b0eb85b.lovable.app-1781610022865.png" },
     ],
     links: [
       {
