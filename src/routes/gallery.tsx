@@ -1,10 +1,11 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { X } from "lucide-react";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import fallback from "@/assets/hero.jpg";
+import { supabase } from "@/integrations/supabase/client";
 
 export const Route = createFileRoute("/gallery")({
   head: () => ({
@@ -55,7 +56,35 @@ function buildItems(): Item[] {
 }
 
 function Gallery() {
-  const items = useMemo(buildItems, []);
+  const fileItems = useMemo(buildItems, []);
+  const [dbItems, setDbItems] = useState<Item[]>([]);
+
+  useEffect(() => {
+    (async () => {
+      const { data } = await supabase
+        .from("gallery_projects")
+        .select("title, category, image_path")
+        .eq("published", true)
+        .order("sort_order");
+      if (!data?.length) return;
+      const resolved = await Promise.all(
+        data.map(async (p) => {
+          const { data: signed } = await supabase.storage.from("gallery").createSignedUrl(p.image_path, 60 * 60 * 24 * 7);
+          return signed?.signedUrl
+            ? { src: signed.signedUrl, name: p.title, category: p.category }
+            : null;
+        }),
+      );
+      setDbItems(resolved.filter(Boolean) as Item[]);
+    })();
+  }, []);
+
+  const items = useMemo(() => {
+    const merged = [...dbItems, ...fileItems];
+    // If db has items, prefer DB-only; otherwise fall back to filesystem
+    return dbItems.length > 0 ? dbItems : merged;
+  }, [dbItems, fileItems]);
+
   const categories = useMemo(() => {
     const set = new Set<string>(items.map((i) => i.category));
     return ["all", ...Array.from(set).sort()];
