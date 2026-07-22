@@ -13,15 +13,15 @@ export function Footer() {
               </span>
             </div>
             <p className="text-sm text-ink/70 leading-relaxed text-pretty">
-              Leading Rwanda's wall finishing industry with luxury precision and
-              architectural excellence since 2017. Transforming spaces across Kigali
-              and beyond.
+              Ubudasa wall paints Ltd is a private company limited by Shares, incorporated on 3July, 2021
+               company code N°119638573, whose head office is located in City of Kigali, Kicukiro District, 
+               Kanombe Sector, Kabeza Cell, KK18st.
             </p>
           </div>
           <div className="space-y-4">
             <h5 className="text-[10px] font-semibold uppercase tracking-[0.25em]">Visit</h5>
             <div className="space-y-2 text-sm text-ink/70">
-              <p>KN 25 Rd, Kicukiro</p>
+              <p>KK 18 Avenue, Kigali</p>
               <p>Kigali, Rwanda</p>
               <p>Mon – Sat · 8am – 6pm</p>
             </div>
@@ -29,8 +29,9 @@ export function Footer() {
           <div className="space-y-4">
             <h5 className="text-[10px] font-semibold uppercase tracking-[0.25em]">Contact</h5>
             <div className="space-y-2 text-sm text-ink/70">
-              <a href="tel:+250788000000" className="block hover:text-brand">+250 788 000 000</a>
-              <a href="mailto:info@ubudasa.rw" className="block hover:text-brand">info@ubudasa.rw</a>
+              <a href="tel:+250788679097" className="block hover:text-brand">+250 788 679 097</a>
+               <a href="tel:+250788789091" className="block hover:text-brand">+250 788 789 091</a>
+              <a href="mailto:ubudasawallpaints@gmail.com" className="block hover:text-brand">ubudasawallpaints@gmail.com</a>
               <Link to="/request-quote" className="block hover:text-brand">Request a Quote →</Link>
             </div>
           </div>
@@ -41,7 +42,7 @@ export function Footer() {
             © {new Date().getFullYear()} Ubudasa Wall Paints Ltd. All rights reserved.
           </p>
           <p className="text-[10px] text-ink/50 uppercase tracking-[0.2em]">
-            Crafted in Kigali · Rwanda
+            CREATED BY <a href="https://www.ikirezi.co.rw" target="_blank" rel="noopener noreferrer" className="hover:text-brand">ICYATSI TECHNOLOGY Limited</a>
           </p>
         </div>
       </div>

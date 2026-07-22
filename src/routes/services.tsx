@@ -21,14 +21,14 @@ export const Route = createFileRoute("/services")({
 });
 
 const list = [
-  { t: "Interior Painting", d: "Full interior wall painting with premium paint brands and master-grade application.", img: sInterior },
-  { t: "Exterior Painting", d: "Weather-resistant exterior coatings engineered for Rwandan rainy seasons.", img: sInterior },
-  { t: "Decorative Finishes", d: "Textured, stencil, marble, and metallic artistic wall finishes.", img: sInterior },
+  { t: "Interior wall painting", d: "Full interior wall painting with premium paint brands and master-grade application.", img: sInterior },
+  { t: "Exterior wall painting", d: "Weather-resistant exterior coatings engineered for Rwandan rainy seasons.", img: sInterior },
+  { t: "Three-dimensional finishes", d: "Textured, stencil, marble, and metallic artistic wall finishes.", img: sInterior },
   { t: "TV Wall Design", d: "Custom built-in TV wall units with integrated LED architectural lighting.", img: sGypsum },
-  { t: "Gypsum Ceilings", d: "False ceilings, coffered designs, and LED panel installations.", img: sGypsum },
+  { t: "artistic wall designs", d: "False ceilings, coffered designs, and LED panel installations.", img: sGypsum },
   { t: "Modern Kitchen Design", d: "Full kitchen renovation and finishing with premium cabinetry.", img: sKitchen },
-  { t: "Bathroom Renovation", d: "Tile, waterproofing, fittings, and complete bathroom transformations.", img: sKitchen },
-  { t: "Interior Decoration", d: "Furniture arrangement, soft furnishings, and full décor styling.", img: sKitchen },
+  { t: "modern floors and modern ceilings design", d: "Tile, waterproofing, fittings, and complete bathroom transformations.", img: sKitchen },
+  { t: "treatment and prevention of wall humidity", d: "Furniture arrangement, soft furnishings, and full décor styling.", img: sKitchen },
   { t: "Commercial Painting", d: "Offices, hotels, warehouses, and large-scale commercial projects.", img: sInterior },
   { t: "Home Renovation", d: "Complete home makeovers — floor to ceiling, on schedule and on budget.", img: sGypsum },
 ];

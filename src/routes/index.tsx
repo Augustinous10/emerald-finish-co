@@ -4,7 +4,7 @@ import { ArrowUpRight, Award, Brush, Clock, Hammer, ShieldCheck, Sparkles } from
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { BeforeAfter } from "@/components/site/BeforeAfter";
-import { CostCalculator } from "@/components/site/CostCalculator";
+// import { CostCalculator } from "@/components/site/CostCalculator";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
 import { StatCounter } from "@/components/site/StatCounter";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
@@ -51,16 +51,37 @@ const slides = [
     eyebrow: "Premium Wall Finishing",
     title: "Transform Your Space Into A Masterpiece",
     body: "Architectural painting and interior finishing tailored for Kigali's finest spaces.",
+    img: hero,
   },
   {
-    eyebrow: "Decorative Craft",
-    title: "Elevate Every Surface, Every Room",
-    body: "Textured plasters, gypsum ceilings, and TV wall designs executed by master craftsmen.",
+    eyebrow: "Interior Craft",
+    title: "Every Room, Flawlessly Finished",
+    body: "Premium application using luxury European techniques for a lasting finish.",
+    img: sInterior,
   },
   {
-    eyebrow: "Commercial Excellence",
-    title: "Excellence In Every Brushstroke",
-    body: "Hotels, offices and exterior projects delivered on time, across 15+ districts.",
+    eyebrow: "Decorative Ceilings",
+    title: "Architectural Depth, Overhead",
+    body: "Bespoke gypsum ceilings and wall features designed for your space.",
+    img: sGypsum,
+  },
+  {
+    eyebrow: "Kitchen Renovation",
+    title: "Culinary Spaces, Reimagined",
+    body: "Full makeovers integrating modern functionality and premium finishes.",
+    img: sKitchen,
+  },
+  {
+    eyebrow: "Decorative Finishes",
+    title: "Texture That Turns Heads",
+    body: "Marble-effect and artistic finishes applied by master craftsmen.",
+    img: p3,
+  },
+  {
+    eyebrow: "The Transformation",
+    title: "See The Ubudasa Difference",
+    body: "Real before-and-after results from projects across Rwanda.",
+    img: after,
   },
 ];
 
@@ -114,7 +135,7 @@ function Home() {
       <Header />
       <WhatsAppButton />
 
-      {/* Hero — auto-rotating slideshow. Drop images in src/assets/hero/ */}
+      {/* Hero — auto-rotating slideshow, 6 project images */}
       <HeroSlideshow slides={slides} />
 
       {/* Stats */}
@@ -178,14 +199,23 @@ function Home() {
               <div>
                 <dt className="text-[10px] uppercase tracking-[0.25em] text-ink/55">Mission</dt>
                 <dd className="mt-2 text-sm text-ink/80">
-                  Transform Rwandan spaces with finishes of international standard.
+                  Our mission is to help you transform your houses through art and skills from paints. 
+                  While delivering the very best in quality and customer service.
+                   With every project, we thoroughly prepare and clean all surfaces prior to painting
+                </dd>
+                <dd className="mt-2 text-sm text-ink/80">
+                  As expert and professional, we work quickly, efficiently, and carefully to complete the job in a timely manner. 
+                  Throughout the process, we remain in consistent communication with you to ensure that your expectations are not only met but exceeded. 
+                  We do all by preserving and protecting our ecosystem.
                 </dd>
               </div>
               <div>
                 <dt className="text-[10px] uppercase tracking-[0.25em] text-ink/55">Vision</dt>
                 <dd className="mt-2 text-sm text-ink/80">
-                  Be East Africa's most respected wall-finishing brand.
+                 Preservation of Rwandan wall painting style from ancients and adopt it to the modern wall painting.
                 </dd>
+                  <dd className="mt-2 text-sm text-ink/80">
+To help you create the home, business, or commercial space of your dreams by providing the very highest quality products and working directly with you to capture your vision, we strive for nothing less than 100% customer satisfaction.</dd>
               </div>
               <div>
                 <dt className="text-[10px] uppercase tracking-[0.25em] text-ink/55">Headquarters</dt>
@@ -317,13 +347,11 @@ function Home() {
           </div>
         </div>
       </section>
-
-      {/* Cost Calculator */}
-      <section className="py-28 bg-brand">
-        <div className="max-w-7xl mx-auto px-6">
-          <CostCalculator />
-        </div>
-      </section>
+      {/* <section className="py-28 bg-brand"> */}
+        {/* <div className="max-w-7xl mx-auto px-6"> */}
+          {/* <CostCalculator /> */}
+        {/* </div> */}
+      {/* </section> */}
 
       {/* Testimonials */}
       <section className="py-28">
@@ -331,22 +359,27 @@ function Home() {
           <div className="max-w-2xl mb-14">
             <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Client Voices</span>
             <h2 className="font-display text-4xl md:text-5xl mt-4 font-medium text-balance">
-              Trusted by 1,200+ clients across Rwanda.
+              Trusted by 1000+ clients across Rwanda and east Africa.
             </h2>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
             {testimonials.map((t) => (
-              <figure key={t.name} className="bg-secondary p-8 space-y-5">
-                <div className="flex gap-1 text-gold">
+              <figure
+                key={t.name}
+                className="bg-secondary p-8 space-y-5 border border-ink/5 transition-colors hover:border-gold/30"
+              >
+                <div className="flex gap-1 text-gold text-sm">
                   {Array.from({ length: 5 }).map((_, i) => (
                     <span key={i}>★</span>
                   ))}
                 </div>
                 <blockquote className="text-ink/80 text-[15px] leading-relaxed text-pretty">
-                  "{t.text}"
+                  <span className="text-gold">"</span>
+                  {t.text}
+                  <span className="text-gold">"</span>
                 </blockquote>
-                <figcaption>
-                  <div className="text-sm font-semibold">{t.name}</div>
+                <figcaption className="pt-1 border-t border-ink/10">
+                  <div className="text-sm font-semibold pt-4">{t.name}</div>
                   <div className="text-xs text-ink/55 mt-0.5">{t.loc}</div>
                 </figcaption>
               </figure>
@@ -387,7 +420,7 @@ function Home() {
           </p>
           <div className="flex flex-wrap justify-center gap-4 pt-2">
             <Link to="/request-quote" className="bg-gold text-gold-foreground px-8 py-4 text-sm uppercase tracking-widest font-semibold hover:bg-canvas transition-colors">
-              Request a Free Quote
+              Get a Free Quote
             </Link>
             <Link to="/contact" className="border border-canvas/30 text-canvas px-8 py-4 text-sm uppercase tracking-widest font-semibold hover:bg-canvas/10 transition-colors">
               Contact Us

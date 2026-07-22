@@ -2,6 +2,8 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 
+import logo from "@/assets/Extra_images/ubudasa_logo.png";
+
 const links = [
   { to: "/services", label: "Services" },
   { to: "/gallery", label: "Gallery" },
@@ -28,21 +30,14 @@ export function Header() {
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
-        <Link to="/" className="flex flex-col leading-none">
-          <span
-            className={`font-display text-2xl tracking-tight ${
-              scrolled ? "text-brand" : "text-canvas"
+        <Link to="/" className="flex items-center">
+          <img
+            src={logo}
+            alt="Ubudasa Wall Paints Ltd"
+            className={`h-16 md:h-20 w-auto transition-all duration-300 ${
+              scrolled ? "" : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.35)]"
             }`}
-          >
-            UBUDASA
-          </span>
-          <span
-            className={`text-[9px] uppercase tracking-[0.3em] mt-0.5 ${
-              scrolled ? "text-gold" : "text-gold"
-            }`}
-          >
-            Wall Paints Ltd
-          </span>
+          />
         </Link>
 
         <div className={`hidden md:flex gap-10 text-xs uppercase tracking-widest font-medium ${
@@ -60,7 +55,7 @@ export function Header() {
             to="/request-quote"
             className="hidden md:inline-flex bg-brand text-brand-foreground px-5 py-2.5 rounded-full text-xs uppercase tracking-widest font-semibold hover:bg-ink transition-colors"
           >
-            Request Quote
+            Get a Free Quote
           </Link>
           <button
             type="button"
@@ -90,7 +85,7 @@ export function Header() {
             onClick={() => setOpen(false)}
             className="block bg-brand text-brand-foreground text-center py-3 rounded-full text-xs uppercase tracking-widest font-semibold"
           >
-            Request Quote
+            Get a Free Quote
           </Link>
         </div>
       )}

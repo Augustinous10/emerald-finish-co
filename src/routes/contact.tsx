@@ -60,9 +60,9 @@ function Contact() {
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16">
           <div className="space-y-8">
             {[
-              { Icon: MapPin, t: "Visit Our Studio", v: "KN 25 Rd, Kicukiro\nKigali, Rwanda" },
-              { Icon: Phone, t: "Call or WhatsApp", v: "+250 788 000 000" },
-              { Icon: Mail, t: "Email", v: "info@ubudasa.rw" },
+              { Icon: MapPin, t: "Visit Our Showroom", v: "KK 18 Avenue,\nKigali, Rwanda" },
+              { Icon: Phone, t: "Call or WhatsApp", v: "+250 788 679 097,+250 788 789 091" },
+              { Icon: Mail, t: "Email", v: "ubudasawallpaints@gmail.com" },
               { Icon: Clock, t: "Business Hours", v: "Mon – Sat · 8:00 – 18:00" },
             ].map(({ Icon, t, v }) => (
               <div key={t} className="flex gap-5">

@@ -54,15 +54,20 @@ function About() {
           <div className="space-y-4">
             <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Mission</span>
             <p className="font-display text-2xl text-pretty leading-snug">
-              To deliver excellence in every surface we finish — transforming spaces across Rwanda
-              with the precision and care of master craftsmen.
+              Our mission is to help you transform your houses through art and skills from paints. While delivering the very best in quality and customer service. With every project, we thoroughly prepare and clean all surfaces prior to painting.
             </p>
+            <p className="font-display text-2xl text-pretty leading-snug">
+As expert and professional, we work quickly, efficiently, and carefully to complete the job in a timely manner. Throughout the process, we remain in consistent communication with you to ensure that your expectations are not only met but exceeded. We do all by preserving and protecting our ecosystem            </p>
           </div>
           <div className="space-y-4">
             <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Vision</span>
             <p className="font-display text-2xl text-pretty leading-snug">
-              To be East Africa's most trusted and innovative wall finishing company by 2030.
+              Preservation of Rwandan wall painting style from ancients and adopt it to the modern wall painting.
             </p>
+             <p className="font-display text-2xl text-pretty leading-snug">
+ <p className="font-display text-2xl text-pretty leading-snug">
+              Preservation of Rwandan wall painting style from ancients and adopt it to the modern wall painting.
+            </p>            </p>
           </div>
         </div>
       </section>

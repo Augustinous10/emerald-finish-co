@@ -1,104 +1,113 @@
-import { useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { Link } from "@tanstack/react-router";
-import { ArrowUpRight } from "lucide-react";
 
-import fallbackHero from "@/assets/hero.jpg";
-
-export type HeroSlide = {
+type Slide = {
   eyebrow: string;
   title: string;
   body: string;
+  img: string;
 };
 
-// Auto-import every image dropped into src/assets/hero/.
-// Drop new JPG/PNG/WEBP files there and they'll appear in the slideshow.
-const imported = import.meta.glob("@/assets/hero/*.{jpg,jpeg,png,webp,JPG,JPEG,PNG,WEBP}", {
-  eager: true,
-  query: "?url",
-  import: "default",
-}) as Record<string, string>;
+export function HeroSlideshow({
+  slides,
+  interval = 6000,
+}: {
+  slides: Slide[];
+  interval?: number;
+}) {
+  const [active, setActive] = useState(0);
+  const [paused, setPaused] = useState(false);
 
-const heroImages: string[] = (() => {
-  const list = Object.entries(imported)
-    .sort(([a], [b]) => a.localeCompare(b))
-    .map(([, url]) => url);
-  return list.length > 0 ? list : [fallbackHero];
-})();
-
-type Props = {
-  slides: HeroSlide[];
-  intervalMs?: number;
-};
-
-export function HeroSlideshow({ slides, intervalMs = 5000 }: Props) {
-  const images = useMemo(() => heroImages, []);
-  const [index, setIndex] = useState(0);
+  const next = useCallback(() => {
+    setActive((i) => (i + 1) % slides.length);
+  }, [slides.length]);
 
   useEffect(() => {
-    if (images.length <= 1) return;
-    const id = setInterval(() => setIndex((i) => (i + 1) % images.length), intervalMs);
-    return () => clearInterval(id);
-  }, [images.length, intervalMs]);
-
-  const slide = slides[index % slides.length];
+    if (paused) return;
+    const t = setInterval(next, interval);
+    return () => clearInterval(t);
+  }, [next, interval, paused]);
 
   return (
-    <section className="relative h-screen min-h-[640px] flex items-end overflow-hidden">
-      {images.map((src, i) => (
-        <img
-          key={src}
-          src={src}
-          alt=""
-          width={1920}
-          height={1280}
-          loading={i === 0 ? "eager" : "lazy"}
-          fetchPriority={i === 0 ? "high" : "low"}
-          className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-[1500ms] ease-in-out ${
-            i === index ? "opacity-100 animate-kenburns" : "opacity-0"
-          }`}
-        />
-      ))}
-      <div className="absolute inset-0 bg-gradient-to-r from-brand/70 via-brand/30 to-transparent" />
-      <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
-
-      <div className="relative z-10 max-w-7xl mx-auto px-6 w-full pb-24 md:pb-32">
-        <div key={index} className="max-w-2xl space-y-8 animate-fade-up">
-          <span className="text-gold text-xs uppercase tracking-[0.4em] font-semibold">
-            {slide.eyebrow}
-          </span>
-          <h1 className="font-display text-canvas text-5xl md:text-7xl leading-[1.05] text-balance font-medium">
-            {slide.title}
-          </h1>
-          <p className="text-canvas/80 text-lg max-w-xl text-pretty">{slide.body}</p>
-          <div className="flex flex-wrap gap-4 pt-4">
-            <Link
-              to="/request-quote"
-              className="inline-flex items-center gap-2 bg-gold text-gold-foreground px-7 py-4 rounded-sm text-sm font-semibold uppercase tracking-widest hover:bg-canvas transition-colors"
-            >
-              Request Quote <ArrowUpRight size={16} />
-            </Link>
-            <Link
-              to="/services"
-              className="inline-flex items-center gap-2 bg-canvas/10 backdrop-blur-md text-canvas border border-canvas/30 px-7 py-4 rounded-sm text-sm font-semibold uppercase tracking-widest hover:bg-canvas/20 transition-colors"
-            >
-              View Services
-            </Link>
-          </div>
+    <section
+      className="relative h-[92vh] min-h-[560px] overflow-hidden bg-ink"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      {slides.map((s, i) => (
+        <div
+          key={s.title}
+          className="absolute inset-0 transition-opacity duration-1000 ease-out"
+          style={{ opacity: i === active ? 1 : 0, zIndex: i === active ? 1 : 0 }}
+          aria-hidden={i !== active}
+        >
+          <img
+            src={s.img}
+            alt={s.title}
+            className="w-full h-full object-cover"
+            style={{ animation: i === active ? "heroZoom 8s ease-out forwards" : "none" }}
+            loading={i === 0 ? "eager" : "lazy"}
+            fetchPriority={i === 0 ? "high" : "auto"}
+          />
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/30 to-ink/10" />
         </div>
+      ))}
 
-        {images.length > 1 && (
-          <div className="absolute bottom-8 right-6 hidden md:flex items-center gap-2 max-w-[60%] flex-wrap justify-end">
-            {images.map((_, i) => (
+      <div className="relative z-10 h-full flex flex-col justify-end">
+        <div className="max-w-7xl mx-auto px-6 pb-20 md:pb-24 w-full">
+          <div className="max-w-2xl text-canvas">
+            <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">
+              {slides[active].eyebrow}
+            </span>
+            <h1 className="font-display text-4xl md:text-6xl font-medium mt-4 leading-[1.05] text-balance">
+              {slides[active].title}
+            </h1>
+            <p className="text-canvas/80 text-lg mt-5 max-w-lg text-pretty">
+              {slides[active].body}
+            </p>
+            <div className="flex flex-wrap gap-4 mt-8">
+              <Link
+                to="/request-quote"
+                className="bg-gold text-gold-foreground px-7 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-canvas transition-colors"
+              >
+                Get a Free Quote
+              </Link>
+              <Link
+                to="/services"
+                className="border border-canvas/40 text-canvas px-7 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-canvas/10 transition-colors"
+              >
+                View Our Work
+              </Link>
+            </div>
+          </div>
+
+          {/* Slide indicators */}
+          <div className="flex gap-2 mt-12">
+            {slides.map((s, i) => (
               <button
-                key={i}
-                onClick={() => setIndex(i)}
-                aria-label={`Slide ${i + 1}`}
-                className={`h-px transition-all ${i === index ? "w-12 bg-gold" : "w-5 bg-canvas/40"}`}
+                key={s.title}
+                onClick={() => setActive(i)}
+                aria-label={`Show slide ${i + 1}: ${s.title}`}
+                className="h-1 rounded-full transition-all duration-300"
+                style={{
+                  width: i === active ? "2.5rem" : "1.25rem",
+                  backgroundColor: i === active ? "#C9A227" : "rgba(255,255,255,0.35)",
+                }}
               />
             ))}
           </div>
-        )}
+        </div>
       </div>
+
+      <style>{`
+        @keyframes heroZoom {
+          from { transform: scale(1); }
+          to { transform: scale(1.08); }
+        }
+        @media (prefers-reduced-motion: reduce) {
+          img { animation: none !important; }
+        }
+      `}</style>
     </section>
   );
 }
