@@ -1,5 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Award, Brush, Clock, Hammer, ShieldCheck, Sparkles } from "lucide-react";
+import { ArrowUpRight, Award, Brush, Heart, MapPin, Sparkles, Users } from "lucide-react";
 
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -102,12 +102,12 @@ const products = [
 ];
 
 const whys = [
-  { icon: Award, t: "Quality Materials", d: "Only premium-grade paints and finishing products on every project." },
-  { icon: Brush, t: "Master Craftsmen", d: "Trained, certified and experienced professionals on every job site." },
-  { icon: ShieldCheck, t: "Workmanship Guarantee", d: "Every project backed by our written satisfaction guarantee." },
-  { icon: Clock, t: "On-Time Delivery", d: "We commit to schedules and deliver — every single time." },
-  { icon: Sparkles, t: "Modern Designs", d: "The latest trends in interior design and decorative finishes." },
-  { icon: Hammer, t: "Full-Service Studio", d: "From color consult to handover — one accountable partner." },
+  { icon: Sparkles, t: "No Fixed Formula", d: "We don't repeat the same design twice — every wall is a fresh exploration, kept unique and new for each client." },
+  { icon: Brush, t: "3D Decorative Finishes", d: "Interior and exterior wall paints applied in distinctive 3D dimensions, built to give any space depth and character." },
+  { icon: Heart, t: "Born From Passion", d: "Founded in 2021 by Delphine Umugwizawase, who turned a personal love of painting into a company built on craft." },
+  { icon: Users, t: "A Women-Led Team", d: "Six permanent professionals and a wider crew of part-timers — 70% of them women — trained and proud of every finish." },
+  { icon: MapPin, t: "Rooted in Kigali", d: "Based in Kanombe, Kicukiro — close to the homes and businesses we serve across Rwanda." },
+  { icon: Award, t: "A Growing Community", d: "A trusted name in Kigali's finishing scene, with a loyal following of clients who return for every new project." },
 ];
 
 const faqs = [
@@ -244,26 +244,42 @@ To help you create the home, business, or commercial space of your dreams by pro
         </div>
       </section>
 
-      {/* Why choose us */}
-      <section className="py-28">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="max-w-2xl mb-16">
-            <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Why Ubudasa</span>
-            <h2 className="font-display text-4xl md:text-5xl mt-4 font-medium text-balance">
-              The standard for finishing in Rwanda.
-            </h2>
-          </div>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-px bg-black/5 border border-black/5">
-            {whys.map(({ icon: Icon, t, d }) => (
-              <div key={t} className="bg-canvas p-10 space-y-4 hover:bg-secondary transition-colors">
-                <Icon className="text-brand" size={28} strokeWidth={1.5} />
-                <h3 className="font-display text-2xl font-medium">{t}</h3>
-                <p className="text-ink/65 text-sm leading-relaxed text-pretty">{d}</p>
-              </div>
-            ))}
+{/* Why choose us */}
+<section className="py-28">
+  <div className="max-w-7xl mx-auto px-6">
+    <div className="max-w-2xl mb-16 flex items-end justify-between gap-8">
+      <div>
+        <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Why Ubudasa</span>
+        <h2 className="font-display text-4xl md:text-5xl mt-4 font-medium text-balance">
+          The standard for finishing in Rwanda.
+        </h2>
+      </div>
+    </div>
+
+    <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {whys.map(({ icon: Icon, t, d }) => (
+        <div
+          key={t}
+          className="group relative bg-canvas border border-black/10 hover:border-gold/50 transition-colors duration-300"
+        >
+          {/* punch-hole tag, swatch-style */}
+          <div className="absolute top-5 right-5 w-3 h-3 rounded-full border border-black/15 group-hover:border-gold transition-colors" />
+
+          <div className="p-8 pt-9">
+            <Icon className="text-brand" size={26} strokeWidth={1.5} />
+
+            <h3 className="font-display text-xl font-medium mt-6">{t}</h3>
+
+            {/* swatch label rule */}
+            <div className="w-8 h-px bg-gold my-4" />
+
+            <p className="text-ink/60 text-sm leading-relaxed text-pretty">{d}</p>
           </div>
         </div>
-      </section>
+      ))}
+    </div>
+  </div>
+</section>
 
       {/* Services */}
       <section className="py-28 bg-secondary">
@@ -388,7 +404,7 @@ To help you create the home, business, or commercial space of your dreams by pro
         </div>
       </section>
 
-      {/* FAQ */}
+      {/* FAQ
       <section className="py-28 bg-secondary">
         <div className="max-w-4xl mx-auto px-6">
           <div className="text-center mb-14">
@@ -407,7 +423,7 @@ To help you create the home, business, or commercial space of your dreams by pro
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Final CTA */}
       <section className="py-28 bg-brand text-canvas">
