@@ -1,0 +1,1 @@
+var e=`/assets/service-gypsum-BL68-kJP.jpg`;export{e as t};
