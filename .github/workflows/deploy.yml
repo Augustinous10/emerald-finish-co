@@ -1,0 +1,33 @@
+name: Build and Deploy
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - run: npm ci
+      - run: npm run build
+
+      - name: Add cPanel deploy config
+        run: |
+          echo "---" > dist/.cpanel.yml
+          echo "deployment:" >> dist/.cpanel.yml
+          echo "  tasks:" >> dist/.cpanel.yml
+          echo "    - export DEPLOYPATH=/home/ubudasawallpaint/public_html/" >> dist/.cpanel.yml
+          echo "    - /bin/cp -R * \$DEPLOYPATH" >> dist/.cpanel.yml
+
+      - name: Deploy to branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./dist
+          publish_branch: deploy
