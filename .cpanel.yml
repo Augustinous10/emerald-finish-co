@@ -2,4 +2,4 @@
 deployment:
   tasks:
     - export DEPLOYPATH=/home/ubudasawallpaint/public_html/
-    - /bin/cp -R .output/public/* $DEPLOYPATH
+    - /bin/cp -R dist/client/* $DEPLOYPATH
