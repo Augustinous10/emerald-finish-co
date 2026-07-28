@@ -1,0 +1,20 @@
+import { jsx } from "react/jsx-runtime";
+//#region src/components/site/WhatsAppButton.tsx
+function WhatsAppButton() {
+	return /* @__PURE__ */ jsx("a", {
+		href: `https://wa.me/250788000000?text=${encodeURIComponent("Hello Ubudasa! I found you online and I'd like a quote for a project.")}`,
+		target: "_blank",
+		rel: "noopener noreferrer",
+		"aria-label": "Chat with Ubudasa on WhatsApp",
+		className: "fixed bottom-6 right-6 z-40 size-14 rounded-full bg-[#25D366] text-white grid place-items-center shadow-lg shadow-black/20 hover:scale-105 transition-transform",
+		children: /* @__PURE__ */ jsx("svg", {
+			viewBox: "0 0 32 32",
+			className: "size-7",
+			fill: "currentColor",
+			"aria-hidden": "true",
+			children: /* @__PURE__ */ jsx("path", { d: "M19.11 17.21c-.3-.15-1.77-.87-2.04-.97-.27-.1-.47-.15-.67.15-.2.3-.77.97-.94 1.17-.17.2-.35.22-.65.07-.3-.15-1.27-.47-2.42-1.5-.89-.79-1.5-1.77-1.67-2.07-.17-.3-.02-.46.13-.61.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.07-.15-.67-1.62-.92-2.22-.24-.58-.49-.5-.67-.51l-.57-.01c-.2 0-.52.07-.79.37-.27.3-1.04 1.01-1.04 2.47s1.07 2.87 1.22 3.07c.15.2 2.1 3.21 5.09 4.5.71.31 1.27.49 1.7.63.71.23 1.36.2 1.87.12.57-.09 1.77-.72 2.02-1.42.25-.7.25-1.3.17-1.42-.07-.12-.27-.2-.57-.35zM16.03 5.33c-5.89 0-10.67 4.78-10.67 10.67 0 1.88.49 3.72 1.43 5.34l-1.51 5.52 5.66-1.48a10.6 10.6 0 0 0 5.09 1.3c5.89 0 10.67-4.78 10.67-10.67S21.92 5.33 16.03 5.33z" })
+		})
+	});
+}
+//#endregion
+export { WhatsAppButton as t };
