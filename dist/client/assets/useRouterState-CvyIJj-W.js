@@ -1,0 +1,1 @@
+import{t as e}from"./useStore-CzW7XWja.js";import{t}from"./useRouter-Bba_TupU.js";import{E as n}from"./index-D5T_wxCn.js";function r(r){let i=t({warn:r?.router===void 0}),a=r?.router||i;return e(a.stores.__store,n(r,a))}export{r as t};

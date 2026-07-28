@@ -1,0 +1,1 @@
+var e=`/assets/services_Ceiling-BnFIOmAK.jpeg`;export{e as t};
