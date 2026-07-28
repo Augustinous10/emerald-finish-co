@@ -2,7 +2,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
 import { WhatsAppButton } from "@/components/site/WhatsAppButton";
-import hero from "@/assets/service-gypsum.jpg";
+import hero from "@/assets/services_Ceiling.jpeg";
 
 export const Route = createFileRoute("/about")({
   head: () => ({
@@ -64,10 +64,9 @@ As expert and professional, we work quickly, efficiently, and carefully to compl
             <p className="font-display text-2xl text-pretty leading-snug">
               Preservation of Rwandan wall painting style from ancients and adopt it to the modern wall painting.
             </p>
-             <p className="font-display text-2xl text-pretty leading-snug">
- <p className="font-display text-2xl text-pretty leading-snug">
-              Preservation of Rwandan wall painting style from ancients and adopt it to the modern wall painting.
-            </p>            </p>
+            <p className="font-display text-2xl text-pretty leading-snug">
+              To help you create the home, business, or commercial space of your dreams by providing the very highest quality products and working directly with you to capture your vision, we strive for nothing less than 100% customer satisfaction.
+            </p>
           </div>
         </div>
       </section>

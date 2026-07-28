@@ -63,7 +63,7 @@ function Contact() {
               { Icon: MapPin, t: "Visit Our Showroom", v: "KK 18 Avenue,\nKigali, Rwanda" },
               { Icon: Phone, t: "Call or WhatsApp", v: "+250 788 679 097,+250 788 789 091" },
               { Icon: Mail, t: "Email", v: "ubudasawallpaints@gmail.com" },
-              { Icon: Clock, t: "Business Hours", v: "Mon – Sat · 8:00 – 18:00" },
+              { Icon: Clock, t: "Business Hours", v: "Mon – Sat · 8:00 – 20:00" },
             ].map(({ Icon, t, v }) => (
               <div key={t} className="flex gap-5">
                 <div className="size-12 grid place-items-center bg-brand text-canvas rounded-sm shrink-0">

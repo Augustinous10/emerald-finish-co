@@ -55,6 +55,14 @@ function buildItems(): Item[] {
   }));
 }
 
+function titleCase(s: string) {
+  return s.replace(/\b\w/g, (m) => m.toUpperCase());
+}
+
+function slugify(s: string) {
+  return s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
+}
+
 function Gallery() {
   const fileItems = useMemo(buildItems, []);
   const [dbItems, setDbItems] = useState<Item[]>([]);
@@ -85,15 +93,20 @@ function Gallery() {
     return dbItems.length > 0 ? dbItems : merged;
   }, [dbItems, fileItems]);
 
-  const categories = useMemo(() => {
-    const set = new Set<string>(items.map((i) => i.category));
-    return ["all", ...Array.from(set).sort()];
+  // Group items by category, preserving a stable, readable order
+  const grouped = useMemo(() => {
+    const map = new Map<string, Item[]>();
+    for (const item of items) {
+      const key = item.category || "all";
+      if (!map.has(key)) map.set(key, []);
+      map.get(key)!.push(item);
+    }
+    return Array.from(map.entries()).sort((a, b) => a[0].localeCompare(b[0]));
   }, [items]);
 
-  const [active, setActive] = useState<string>("all");
-  const [lightbox, setLightbox] = useState<Item | null>(null);
+  const categories = useMemo(() => grouped.map(([c]) => c), [grouped]);
 
-  const filtered = active === "all" ? items : items.filter((i) => i.category === active);
+  const [lightbox, setLightbox] = useState<Item | null>(null);
 
   return (
     <div className="bg-canvas text-ink">
@@ -110,52 +123,59 @@ function Gallery() {
           renovations — each delivered to the Ubudasa standard.
         </p>
 
+        {/* Jump-to-category nav */}
         <div className="mt-10 flex flex-wrap gap-2">
           {categories.map((c) => (
-            <button
+            <a
               key={c}
-              type="button"
-              onClick={() => setActive(c)}
-              className={`px-4 py-2 rounded-full text-xs uppercase tracking-widest border transition-colors ${
-                active === c
-                  ? "bg-brand text-brand-foreground border-brand"
-                  : "bg-transparent text-ink border-black/15 hover:border-brand"
-              }`}
+              href={`#${slugify(c)}`}
+              className="px-4 py-2 rounded-full text-xs uppercase tracking-widest border border-black/15 text-ink hover:border-brand hover:text-brand transition-colors"
             >
-              {c}
-            </button>
+              {titleCase(c)}
+            </a>
           ))}
         </div>
       </section>
 
-      <section className="px-6 max-w-7xl mx-auto pb-24">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
-          {filtered.map((item, idx) => (
-            <button
-              key={`${item.src}-${idx}`}
-              type="button"
-              onClick={() => setLightbox(item)}
-              className="mb-6 block w-full break-inside-avoid group relative overflow-hidden rounded-md bg-ink/5"
-            >
-              <img
-                src={item.src}
-                alt={item.name}
-                loading="lazy"
-                className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-              <div className="absolute bottom-0 left-0 right-0 p-5 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-500">
-                <p className="text-[10px] uppercase tracking-[0.3em] text-gold">{item.category}</p>
-                <p className="font-display text-xl text-canvas mt-1">{item.name}</p>
-              </div>
-            </button>
-          ))}
-        </div>
+      {grouped.length === 0 && (
+        <section className="px-6 max-w-7xl mx-auto pb-24">
+          <p className="text-center text-ink/60 py-20">No projects yet.</p>
+        </section>
+      )}
 
-        {filtered.length === 0 && (
-          <p className="text-center text-ink/60 py-20">No projects in this category yet.</p>
-        )}
-      </section>
+      {grouped.map(([category, catItems]) => (
+        <section key={category} id={slugify(category)} className="px-6 max-w-7xl mx-auto pb-20 scroll-mt-28">
+          <div className="flex items-end justify-between gap-6 mb-8 border-b border-black/10 pb-4">
+            <h2 className="font-display text-3xl md:text-4xl">{titleCase(category)}</h2>
+            <span className="text-xs uppercase tracking-[0.3em] text-ink/45">
+              {catItems.length} {catItems.length === 1 ? "project" : "projects"}
+            </span>
+          </div>
+
+          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 [column-fill:_balance]">
+            {catItems.map((item, idx) => (
+              <button
+                key={`${item.src}-${idx}`}
+                type="button"
+                onClick={() => setLightbox(item)}
+                className="mb-6 block w-full break-inside-avoid group relative overflow-hidden rounded-md bg-ink/5"
+              >
+                <img
+                  src={item.src}
+                  alt={item.name}
+                  loading="lazy"
+                  className="w-full h-auto object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-ink/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 p-5 text-left opacity-0 group-hover:opacity-100 transition-opacity duration-500">
+                  <p className="text-[10px] uppercase tracking-[0.3em] text-gold">{item.category}</p>
+                  <p className="font-display text-xl text-canvas mt-1">{item.name}</p>
+                </div>
+              </button>
+            ))}
+          </div>
+        </section>
+      ))}
 
       <section className="bg-brand text-brand-foreground py-20 px-6">
         <div className="max-w-4xl mx-auto text-center">

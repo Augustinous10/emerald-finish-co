@@ -10,9 +10,9 @@ import { StatCounter } from "@/components/site/StatCounter";
 import { HeroSlideshow } from "@/components/site/HeroSlideshow";
 
 import hero from "@/assets/hero.jpg";
-import sInterior from "@/assets/service-interior.jpg";
-import sGypsum from "@/assets/service-gypsum.jpg";
-import sKitchen from "@/assets/service-kitchen.jpg";
+import sInterior from "@/assets/services_Interior_design.jpeg";
+import sGypsum from "@/assets/services_Ceiling.jpeg";
+import sKitchen from "@/assets/services_Kitchen.jpeg";
 import p1 from "@/assets/product-1.jpg";
 import p2 from "@/assets/product-2.jpg";
 import p3 from "@/assets/product-3.jpg";
