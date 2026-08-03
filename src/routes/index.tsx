@@ -1,5 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowUpRight, Award, Brush, Heart, MapPin, Sparkles, Users } from "lucide-react";
+import { ArrowUpRight, Award, Brush, Heart, MapPin, Sparkles, Users, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { useState } from "react";
 
 import { Header } from "@/components/site/Header";
 import { Footer } from "@/components/site/Footer";
@@ -13,12 +14,20 @@ import hero from "@/assets/hero.jpg";
 import sInterior from "@/assets/services_Interior_design.jpeg";
 import sGypsum from "@/assets/services_Ceiling.jpeg";
 import sKitchen from "@/assets/services_Kitchen.jpeg";
-import p1 from "@/assets/product-1.jpg";
-import p2 from "@/assets/product-2.jpg";
 import p3 from "@/assets/product-3.jpg";
-import p4 from "@/assets/product-4.jpg";
 import before from "@/assets/before.jpg";
 import after from "@/assets/after.jpg";
+
+import catalogue1 from "@/assets/Extra_images/IMG_5686.JPG.jpeg";
+import catalogue2 from "@/assets/Extra_images/IMG_5687.JPG.jpeg";
+import catalogue3 from "@/assets/Extra_images/IMG_5688.JPG.jpeg";
+import catalogue4 from "@/assets/Extra_images/IMG_5689.JPG.jpeg";
+import catalogue5 from "@/assets/Extra_images/IMG_5690.JPG.jpeg";
+import catalogue6 from "@/assets/Extra_images/IMG_5691.JPG.jpeg";
+import catalogue7 from "@/assets/Extra_images/IMG_5692.JPG.jpeg";
+import catalogue8 from "@/assets/Extra_images/IMG_5693.JPG.jpeg";
+import catalogue9 from "@/assets/Extra_images/IMG_5694.JPG.jpeg";
+import catalogue10 from "@/assets/Extra_images/IMG_5695.JPG.jpeg";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -94,11 +103,42 @@ const services = [
   { title: "Bathroom Renovation", desc: "Waterproofing, tiling and fittings — a complete bathroom transformation.", img: sKitchen },
 ];
 
-const products = [
-  { name: "Interior Matte Silk", sub: "200+ Custom Colors · 4L", price: 18000, img: p1 },
-  { name: "Smooth Base Putty", sub: "Professional Grade · 5kg", price: 9000, img: p2 },
-  { name: "Marble Effect Finish", sub: "Artistic Texture · 5kg", price: 28000, img: p3 },
-  { name: "Exterior Guard Plus", sub: "Weather Resistant · 4L", price: 22000, img: p4 },
+const paintProducts = [
+  { name: "Interior Wall Putty", unit: "Standard Bucket / Bag", price: 15000 },
+  { name: "Exterior Wall Putty", unit: "Standard Bucket / Bag", price: 15000 },
+  { name: "Metallic Paint 1KG", unit: "Standard Unit", price: 20000 },
+  { name: "Silk Premium Paint", unit: "Standard Bucket", price: 90000 },
+  { name: "Weather Guard Paint", unit: "Standard Bucket", price: 100000 },
+  { name: "Matt Paint", unit: "Standard Bucket", price: 60000 },
+  { name: "Budget Paint", unit: "Standard Bucket", price: 20000 },
+  { name: "Primer", unit: "Standard Unit", price: 15000 },
+  { name: "Bato Stucco", unit: "Standard Unit", price: 17000 },
+  { name: "Stone Finish", unit: "Standard Unit", price: 80000 },
+  { name: "Stone Paint", unit: "Standard Unit", price: null },
+  { name: "Anti-Humidity Paint", unit: "Standard Unit", price: null },
+  { name: "Wallmaster", unit: "Standard Unit", price: 29500 },
+  { name: "Gold Paint (1L)", unit: "1 Liter", price: 25000 },
+  { name: "Silver Paint (1L)", unit: "1 Liter", price: 25000 },
+  { name: "NC Matt Cellulose", unit: "Standard Can", price: 30000 },
+  { name: "Tunel (Thinner)", unit: "Standard Unit", price: 20000 },
+  { name: "Fast Dry", unit: "Standard Unit", price: 25000 },
+  { name: "Plaster", unit: "Standard Bag", price: 25000 },
+];
+
+const toolProducts = [
+  { name: "Big Roller", unit: "Piece", price: 2500 },
+  { name: "Medium Roller", unit: "Piece", price: 1500 },
+  { name: "Small Roller", unit: "Piece", price: 1000 },
+  { name: "Big Brush", unit: "Piece", price: 1000 },
+  { name: "Small Brush", unit: "Piece", price: 500 },
+  { name: "Corner Tape", unit: "Roll", price: 10000 },
+  { name: "Udutimba (Mesh/Scrim Tape)", unit: "Pack / Roll", price: 5000 },
+  { name: "Indasa Sandpaper (120 / 220 grit)", unit: "Roll / Pack", price: 1000 },
+  { name: "Scotch Tape (Masking Tape)", unit: "Roll", price: 1000 },
+  { name: "Ibipande", unit: "Piece / Pack", price: 2000 },
+  { name: "Ishashi / Black Sheet", unit: "Roll / Piece", price: 30000 },
+  { name: "Corner Beads", unit: "Piece", price: 5000 },
+  { name: "Coupe Mastic", unit: "Piece / Tube", price: 1500 },
 ];
 
 const whys = [
@@ -125,11 +165,35 @@ const testimonials = [
   { name: "Sandrine K.", loc: "Property Developer, Gasabo", text: "Their finish quality holds up beautifully across all 14 apartments. We won't use anyone else for our future projects." },
 ];
 
+const catalogues = [
+  { title: "Cool Greens", img: catalogue1 },
+  { title: "Collection 02", img: catalogue2 },
+  { title: "Collection 03", img: catalogue3 },
+  { title: "Collection 04", img: catalogue4 },
+  { title: "Collection 05", img: catalogue5 },
+  { title: "Collection 06", img: catalogue6 },
+  { title: "Collection 07", img: catalogue7 },
+  { title: "Collection 08", img: catalogue8 },
+  { title: "Collection 09", img: catalogue9 },
+  { title: "Collection 10", img: catalogue10 },
+];
+
 function fmtRWF(n: number) {
   return new Intl.NumberFormat("en-RW").format(n);
 }
 
+const USD_RATE = 1450; // approx RWF per USD
+
+function fmtUSD(n: number) {
+  return new Intl.NumberFormat("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 }).format(
+    n / USD_RATE
+  );
+}
+
 function Home() {
+  const [activeCatalogue, setActiveCatalogue] = useState<number | null>(null);
+  const [activeCategory, setActiveCategory] = useState<"paints" | "tools">("paints");
+
   return (
     <div className="bg-canvas text-ink">
       <Header />
@@ -332,34 +396,82 @@ To help you create the home, business, or commercial space of your dreams by pro
         </div>
       </section>
 
-      {/* Products */}
+      {/* Products / Price List */}
       <section className="py-28 bg-secondary">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="flex justify-between items-end mb-12">
+        <div className="max-w-6xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-12">
             <div>
               <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Showroom</span>
-              <h2 className="font-display text-4xl md:text-5xl mt-4 font-medium">Premium Finishes</h2>
+              <h2 className="font-display text-4xl md:text-5xl mt-4 font-medium">Products &amp; Price List</h2>
+              <p className="text-ink/60 mt-3 max-w-lg text-pretty">
+                Premium paints, finishes and application tools — priced transparently.
+                Contact us for bulk or project-based rates.
+              </p>
             </div>
-            <a href="#" className="text-sm uppercase tracking-widest border-b border-ink pb-1">Shop Collection</a>
+
+            {/* Category tabs */}
+            <div className="flex gap-2 self-start md:self-auto">
+              <button
+                onClick={() => setActiveCategory("paints")}
+                className={`px-5 py-3 text-xs font-semibold uppercase tracking-widest border transition-colors ${
+                  activeCategory === "paints"
+                    ? "bg-ink text-canvas border-ink"
+                    : "bg-transparent text-ink border-ink/20 hover:border-ink/40"
+                }`}
+              >
+                Paints &amp; Finishes
+              </button>
+              <button
+                onClick={() => setActiveCategory("tools")}
+                className={`px-5 py-3 text-xs font-semibold uppercase tracking-widest border transition-colors ${
+                  activeCategory === "tools"
+                    ? "bg-ink text-canvas border-ink"
+                    : "bg-transparent text-ink border-ink/20 hover:border-ink/40"
+                }`}
+              >
+                Tools &amp; Accessories
+              </button>
+            </div>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8">
-            {products.map((p) => (
-              <div key={p.name} className="group">
-                <div className="aspect-[4/5] bg-canvas overflow-hidden mb-5">
-                  <img src={p.img} alt={p.name} loading="lazy" className="w-full h-full object-cover group-hover:scale-[1.03] transition-transform duration-700" />
+
+          <div className="bg-canvas border border-ink/10">
+            {/* Header row */}
+            <div className="hidden sm:grid grid-cols-12 gap-4 px-6 md:px-8 py-4 border-b border-ink/10 text-[10px] uppercase tracking-[0.25em] text-ink/50">
+              <span className="col-span-6">Product</span>
+              <span className="col-span-3">Unit</span>
+              <span className="col-span-3 text-right">Price</span>
+            </div>
+
+            {(activeCategory === "paints" ? paintProducts : toolProducts).map((p, i) => (
+              <div
+                key={p.name}
+                className={`grid grid-cols-12 gap-2 sm:gap-4 px-6 md:px-8 py-5 items-center ${
+                  i !== 0 ? "border-t border-ink/10" : ""
+                } hover:bg-secondary/60 transition-colors`}
+              >
+                <div className="col-span-8 sm:col-span-6">
+                  <h4 className="text-sm md:text-[15px] font-medium">{p.name}</h4>
+                  <p className="text-xs text-ink/50 mt-0.5 sm:hidden">{p.unit}</p>
                 </div>
-                <div className="flex justify-between items-start gap-2">
-                  <div>
-                    <h4 className="text-sm font-medium">{p.name}</h4>
-                    <p className="text-xs text-ink/55 mt-0.5">{p.sub}</p>
-                  </div>
-                  <span className="text-sm font-medium text-brand whitespace-nowrap">{fmtRWF(p.price)} RWF</span>
-                </div>
-                <button className="mt-4 w-full py-2.5 bg-ink text-canvas text-[11px] uppercase tracking-widest opacity-0 group-hover:opacity-100 transition-opacity">
-                  Add to Cart
-                </button>
+                <span className="hidden sm:block col-span-3 text-sm text-ink/60">{p.unit}</span>
+                <span className="col-span-4 sm:col-span-3 text-right text-sm font-medium text-brand whitespace-nowrap">
+                  {p.price !== null ? `$${fmtUSD(p.price)}` : "On Request"}
+                </span>
               </div>
             ))}
+          </div>
+
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4">
+            <p className="text-xs text-ink/50 text-pretty">
+              Prices listed in US Dollars (USD) and subject to change. Items marked
+              "On Request" are quoted based on project scope.
+            </p>
+            <Link
+              to="/request-quote"
+              className="inline-flex items-center gap-2 bg-brand text-canvas px-7 py-4 text-xs font-semibold uppercase tracking-widest hover:bg-ink transition-colors whitespace-nowrap"
+            >
+              Request a Quote <ArrowUpRight size={14} />
+            </Link>
           </div>
         </div>
       </section>
@@ -443,6 +555,106 @@ To help you create the home, business, or commercial space of your dreams by pro
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* Company Catalogues */}
+      <section className="py-28 bg-secondary text-ink relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-16">
+            <div className="max-w-xl">
+              <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">
+                Our Collections
+              </span>
+              <h2 className="font-display text-4xl md:text-5xl mt-4 font-medium text-balance">
+                Explore the Ubudasa Catalogue.
+              </h2>
+              <p className="text-ink/60 mt-4 text-pretty">
+                Browse our full range of premium finishes, tones and textures —
+                curated collections ready to bring your space to life.
+              </p>
+            </div>
+          </div>
+
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-5">
+            {catalogues.map((c, i) => (
+              <button
+                key={c.title}
+                onClick={() => setActiveCatalogue(i)}
+                className="group relative aspect-[3/4] overflow-hidden bg-canvas border border-black/10 text-left"
+              >
+                <img
+                  src={c.img}
+                  alt={c.title}
+                  loading="lazy"
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-ink/80 via-ink/0 to-ink/0 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute bottom-0 left-0 right-0 p-4 translate-y-3 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all duration-300">
+                  <span className="text-xs uppercase tracking-widest font-semibold text-canvas">
+                    {c.title}
+                  </span>
+                </div>
+                <div className="absolute top-3 right-3 w-8 h-8 rounded-full border border-ink/20 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity">
+                  <ArrowUpRight size={14} className="text-ink" />
+                </div>
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Lightbox */}
+        {activeCatalogue !== null && (
+          <div
+            className="fixed inset-0 z-50 bg-ink/95 flex items-center justify-center px-4"
+            onClick={() => setActiveCatalogue(null)}
+          >
+            <button
+              onClick={() => setActiveCatalogue(null)}
+              className="absolute top-6 right-6 text-canvas/70 hover:text-canvas transition-colors"
+              aria-label="Close"
+            >
+              <X size={28} />
+            </button>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveCatalogue(
+                  (activeCatalogue - 1 + catalogues.length) % catalogues.length
+                );
+              }}
+              className="absolute left-4 md:left-10 text-canvas/70 hover:text-canvas transition-colors"
+              aria-label="Previous"
+            >
+              <ChevronLeft size={32} />
+            </button>
+
+            <div
+              className="max-w-2xl w-full max-h-[80vh] flex flex-col items-center gap-4"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <img
+                src={catalogues[activeCatalogue].img}
+                alt={catalogues[activeCatalogue].title}
+                className="max-h-[70vh] w-auto object-contain"
+              />
+              <span className="text-canvas/70 text-xs uppercase tracking-[0.3em]">
+                {catalogues[activeCatalogue].title} — {activeCatalogue + 1} / {catalogues.length}
+              </span>
+            </div>
+
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setActiveCatalogue((activeCatalogue + 1) % catalogues.length);
+              }}
+              className="absolute right-4 md:right-10 text-canvas/70 hover:text-canvas transition-colors"
+              aria-label="Next"
+            >
+              <ChevronRight size={32} />
+            </button>
+          </div>
+        )}
       </section>
 
       <Footer />

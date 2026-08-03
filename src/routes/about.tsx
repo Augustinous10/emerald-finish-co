@@ -10,7 +10,7 @@ export const Route = createFileRoute("/about")({
       { title: "About Ubudasa — Rwanda's Premium Wall Finishing Studio" },
       { name: "description", content: "Our story, mission, and the team behind Rwanda's most trusted wall finishing and interior design company." },
       { property: "og:title", content: "About Ubudasa Wall Paints Ltd" },
-      { property: "og:description", content: "Founded in 2017, Ubudasa has finished 500+ projects across Rwanda with master craftsmanship and premium materials." },
+      { property: "og:description", content: "Founded in 2021, Ubudasa is a 216-strong team of wall finishing and interior design specialists based in Kigali." },
       { property: "og:url", content: "/about" },
     ],
     links: [{ rel: "canonical", href: "/about" }],
@@ -26,10 +26,10 @@ const values = [
 ];
 
 const timeline = [
-  { y: "2017", t: "Founded in Kigali", d: "Three master painters launch Ubudasa to raise Rwanda's finishing standards." },
-  { y: "2019", t: "First hotel contract", d: "Completed luxury suite finishing for a 60-room Kigali hospitality client." },
-  { y: "2022", t: "100+ team members", d: "Expanded to a full-service studio: painting, gypsum, decorative, and renovations." },
-  { y: "2025", t: "500+ projects, 15 districts", d: "Now Rwanda's most-requested premium wall finishing partner." },
+  { y: "2021", t: "Ubudasa Wall Paints Ltd incorporated", d: "Registered in Kigali as a private company limited by shares, led by co-founders Henriette and Delphine." },
+  { y: "Growth", t: "216-strong team", d: "Our team has grown to 216 skilled staff, trained continuously to sharpen their craft." },
+  { y: "Recognition", t: "Women's Excellence in Business & Leadership award", d: "Honoured alongside German Cooperation (GIZ) and 1000 Hills Events for excellence in business and leadership." },
+  { y: "Today", t: "A full-service finishing studio", d: "Interior and exterior painting, 3D decorative wall tiles, tile application, and modern ceiling design — for homes, hotels, offices, and commercial spaces across Rwanda." },
 ];
 
 function About() {
@@ -54,18 +54,19 @@ function About() {
           <div className="space-y-4">
             <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Mission</span>
             <p className="font-display text-2xl text-pretty leading-snug">
-              Our mission is to help you transform your houses through art and skills from paints. While delivering the very best in quality and customer service. With every project, we thoroughly prepare and clean all surfaces prior to painting.
+              Our mission is to help you transform your houses through art and skill using paint, while delivering the very best in quality and customer service. With every project, we thoroughly prepare and clean all surfaces prior to painting.
             </p>
             <p className="font-display text-2xl text-pretty leading-snug">
-As expert and professional, we work quickly, efficiently, and carefully to complete the job in a timely manner. Throughout the process, we remain in consistent communication with you to ensure that your expectations are not only met but exceeded. We do all by preserving and protecting our ecosystem            </p>
+              As experts and professionals, we work quickly, efficiently, and carefully to complete every job in a timely manner. Throughout the process, we remain in consistent communication with our clients to ensure expectations are not only met but exceeded — all while preserving and protecting our ecosystem.
+            </p>
           </div>
           <div className="space-y-4">
             <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Vision</span>
             <p className="font-display text-2xl text-pretty leading-snug">
-              Preservation of Rwandan wall painting style from ancients and adopt it to the modern wall painting.
+              To preserve the ancient Rwandan wall-painting style and adapt it to modern wall painting.
             </p>
             <p className="font-display text-2xl text-pretty leading-snug">
-              To help you create the home, business, or commercial space of your dreams by providing the very highest quality products and working directly with you to capture your vision, we strive for nothing less than 100% customer satisfaction.
+              To help clients create the home, business, or commercial space of their dreams by providing the very highest quality products and working directly with them to capture their vision — we strive for nothing less than 100% customer satisfaction.
             </p>
           </div>
         </div>
@@ -98,6 +99,16 @@ As expert and professional, we work quickly, efficiently, and carefully to compl
               </li>
             ))}
           </ol>
+        </div>
+      </section>
+
+      <section className="py-28 bg-secondary">
+        <div className="max-w-4xl mx-auto px-6 text-center space-y-3">
+          <span className="text-gold text-xs uppercase tracking-[0.3em] font-semibold">Led by</span>
+          <h2 className="font-display text-3xl md:text-4xl font-medium">Henriette &amp; Delphine</h2>
+          <p className="text-ink/65 max-w-xl mx-auto text-pretty leading-relaxed">
+            Ubudasa Wall Paints Ltd is owned and led by Henriette and Delphine, based in Kicukiro District, Kigali.
+          </p>
         </div>
       </section>
 
