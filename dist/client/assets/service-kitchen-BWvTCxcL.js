@@ -1,1 +1,0 @@
-var e=`/assets/service-interior-CyYcQZYY.jpg`,t=`/assets/service-kitchen-Cngvsh73.jpg`;export{e as n,t};
